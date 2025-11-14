@@ -13,3 +13,9 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+Reference/API
+=============
+
+.. automodapi:: giant_pulse
+.. automodapi:: giant_pulse.

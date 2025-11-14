@@ -28,10 +28,7 @@ test = [
     "pytest-doctestplus",
     "pytest-cov",
 ]
-docs = [
-    "sphinx",
-    "sphinx-automodapi",
-]
+docs = ["sphinx-astropy"]
 
 [tool.setuptools]
 zip-safe = false
