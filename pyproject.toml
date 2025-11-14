@@ -14,7 +14,12 @@ license = { file = "licenses/LICENSE.rst" }
 authors = [
   { name = "Benjamin Scully", email = "b.scully@mail.utoronto.ca" },
 ]
-dependencies = []
+dependencies = [
+  "astropy",
+  "numpy",
+  "baseband",
+  "baseband-tasks"
+]
 dynamic = ["version"]
 
 [project.optional-dependencies]
