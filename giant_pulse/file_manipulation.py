@@ -1,7 +1,12 @@
 import numpy as np
 import astropy.units as u
-import baseband_tasks as bbt
-import baseband as bb
+from baseband import guppi
+from baseband_tasks.combining import Concatenate
+from baseband_tasks import dm
+from baseband_tasks.base import SetAttribute
+from baseband_tasks.functions import Square
+from baseband_tasks.integration import Integrate
+from baseband_tasks.dispersion import DedisperseSamples, Dedisperse
 
 __all__ = ['combine_files_freq']
 
@@ -28,7 +33,7 @@ def combine_files_freq(file_names, samples_per_frame=1024, axis=2):
         File path to the combined baseband file.
     """
 
-    fs = [bbt.open(filename) for filename in file_names]
+    fs = [guppi.open(filename) for filename in file_names]
 
     base_freq = fs[0].header0["OBSFREQ"] * u.MHz
     chan_bw = fs[0].header0["CHAN_BW"] * u.MHz
@@ -37,9 +42,12 @@ def combine_files_freq(file_names, samples_per_frame=1024, axis=2):
     total_chans = n_chans * len(fs)
     freqs = base_freq + np.linspace(0, total_chans - 1, total_chans) * chan_bw
 
-    fs = [bbt.base.SetAttribute(f, samples_per_frame=samples_per_frame) for f in fs]
+    fs = [SetAttribute(f, samples_per_frame=samples_per_frame) for f in fs]
 
-    combined = bbt.combining.Concatenate(fs, axis=axis)
-    combined = bbt.base.SetAttribute(combined, freqs=freqs)
+    combined = Concatenate(fs, axis=axis)
+    combined = SetAttribute(combined, frequency=freqs, sideband=1)
+
+    # for f in fs:
+    #     f.close()
 
     return combined
