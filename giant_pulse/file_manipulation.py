@@ -3,6 +3,8 @@ import astropy.units as u
 import baseband_tasks as bbt
 import baseband as bb
 
+__all__ = ['combine_files_freq']
+
 def combine_files_freq(file_names, samples_per_frame=1024, axis=2):
     """Reads in multiple baseband files and combines them along 
     the frequency axis. Additionally defines the associated frequency

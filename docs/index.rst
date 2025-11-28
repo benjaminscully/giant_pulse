@@ -18,4 +18,3 @@ Reference/API
 =============
 
 .. automodapi:: giant_pulse
-.. automodapi:: giant_pulse.

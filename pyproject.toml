@@ -22,6 +22,10 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[project.urls]
+repository = "https://github.com/benjaminscully/giant_pulse"
+documentation =  "https://giant_pulse.readthedocs.io"
+
 [project.optional-dependencies]
 test = [
     "pytest",
