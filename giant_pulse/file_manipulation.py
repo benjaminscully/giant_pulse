@@ -35,12 +35,22 @@ def combine_files_freq(file_names, samples_per_frame=1024, axis=2):
 
     fs = [guppi.open(filename) for filename in file_names]
 
-    base_freq = fs[0].header0["OBSFREQ"] * u.MHz
+    base_freqs = [f.header0["OBSFREQ"] * u.MHz for f in fs]
     chan_bw = fs[0].header0["CHAN_BW"] * u.MHz
     n_chans = fs[0].header0["OBSNCHAN"]
-    band_size = chan_bw * n_chans
-    total_chans = n_chans * len(fs)
-    freqs = base_freq + np.linspace(0, total_chans - 1, total_chans) * chan_bw
+    # band_size = chan_bw * n_chans
+    # total_chans = n_chans * len(fs)
+
+    freqs = np.array([base_freq + np.linspace(0, n_chans-1, n_chans) * chan_bw for base_freq in base_freqs])
+    freqs = np.reshape(freqs, freqs.shape[0]*freqs.shape[1])
+    freqs = freqs * u.MHz
+
+    # base_freq = fs[0].header0["OBSFREQ"] * u.MHz
+    # chan_bw = fs[0].header0["CHAN_BW"] * u.MHz
+    # n_chans = fs[0].header0["OBSNCHAN"]
+    # band_size = chan_bw * n_chans
+    # total_chans = n_chans * len(fs)
+    # freqs = base_freq + np.linspace(0, total_chans - 1, total_chans) * chan_bw
 
     fs = [SetAttribute(f, samples_per_frame=samples_per_frame) for f in fs]
 
