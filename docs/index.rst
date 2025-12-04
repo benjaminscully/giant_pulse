@@ -1,7 +1,10 @@
 giant_pulse Documentation
 -------------------------
 
-This is the documentation for giant_pulse.
+Welcome to the documentation for the (bare bones) giant_pulse package! This package is designed to be used for 
+finding giant pulses from pulsars in radio astronomy data files. Right now there's just one function for
+combining multiple data files into one, but more functionality will be added in the future!
+
 
 .. toctree::
    :maxdepth: 2
