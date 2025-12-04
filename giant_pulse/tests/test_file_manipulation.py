@@ -18,16 +18,21 @@ def test_combine_files_freq():
     from baseband import guppi
     import numpy as np
     import astropy.units as u
+    from pathlib import Path
 
     axis = 2  # Frequency axis
     samples_per_frame = 1024
 
-    combined = combine_files_freq(['../data/puppi1.raw', '../data/puppi2.raw', '../data/puppi3.raw'],
-                                   samples_per_frame=samples_per_frame, axis=axis)
+    # Get paths relative to this test file's location
+    test_dir = Path(__file__).parent
+    data_dir = test_dir.parent / 'data'
+    file_paths = [str(data_dir / 'puppi1.raw'), str(data_dir / 'puppi2.raw'), str(data_dir / 'puppi3.raw')]
 
-    f1 = guppi.open('../data/puppi1.raw', 'rs')
-    f2 = guppi.open('../data/puppi2.raw', 'rs')
-    f3 = guppi.open('../data/puppi3.raw', 'rs')
+    combined = combine_files_freq(file_paths, samples_per_frame=samples_per_frame, axis=axis)
+
+    f1 = guppi.open(str(data_dir / 'puppi1.raw'), 'rs')
+    f2 = guppi.open(str(data_dir / 'puppi2.raw'), 'rs')
+    f3 = guppi.open(str(data_dir / 'puppi3.raw'), 'rs')
 
     d1 = f1.read()
     d2 = f2.read()
