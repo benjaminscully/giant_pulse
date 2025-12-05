@@ -29,23 +29,15 @@ def test_combine_files_freq():
     file_paths = [str(data_dir / 'puppi1.raw'), str(data_dir / 'puppi2.raw'), str(data_dir / 'puppi3.raw')]
 
     combined = combine_files_freq(file_paths, samples_per_frame=samples_per_frame, axis=axis)
-
-    f1 = guppi.open(str(data_dir / 'puppi1.raw'), 'rs')
-    f2 = guppi.open(str(data_dir / 'puppi2.raw'), 'rs')
-    f3 = guppi.open(str(data_dir / 'puppi3.raw'), 'rs')
-
-    d1 = f1.read()
-    d2 = f2.read()
-    d3 = f3.read()
-    header1 = f1.header0
-    header2 = f2.header0
-    header3 = f3.header0    
-    
-    f1.close()
-    f2.close()
-    f3.close()
-
     combined_data = combined.read()
+
+    with guppi.open(str(data_dir / 'puppi1.raw'), 'rs') as f1:
+        header1 = f1.header0
+        d1 = f1.read()
+    with guppi.open(str(data_dir / 'puppi2.raw'), 'rs') as f2:
+        d2 = f2.read()
+    with guppi.open(str(data_dir / 'puppi3.raw'), 'rs') as f3:
+        d3 = f3.read()
 
     # Check that the combined data has the correct shape
     expected_shape = list(d1.shape)
