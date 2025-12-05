@@ -24,13 +24,13 @@ def combine_files_freq(file_names, samples_per_frame=1024, axis=2):
         Number of samples per frame for the combined file. Default is 1024.
 
     axis : int, optional
-        Axis along which to combine the files. Should be the frequency axis.
+        Axis along which to combine the files.
         Default is 2.
 
     Returns
     -------
     combined : str
-        File path to the combined baseband file.
+        Baseband-tasks streams associated with file_names with frequencies assigned to each channel.
     """
 
     fs = [guppi.open(filename) for filename in file_names]
@@ -47,8 +47,5 @@ def combine_files_freq(file_names, samples_per_frame=1024, axis=2):
 
     combined = Concatenate(fs, axis=axis)
     combined = SetAttribute(combined, frequency=freqs, sideband=1)
-
-    # for f in fs:
-    #     f.close()
 
     return combined
