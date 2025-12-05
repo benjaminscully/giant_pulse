@@ -30,7 +30,7 @@ def combine_files_freq(file_names, samples_per_frame=1024, axis=2):
     Returns
     -------
     combined : str
-        Baseband-tasks streams associated with file_names with frequencies assigned to each channel.
+        baseband-tasks stream object representing the combined data of the input files.
     """
 
     fs = [guppi.open(filename) for filename in file_names]
